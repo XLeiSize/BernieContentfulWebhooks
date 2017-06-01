@@ -6,7 +6,7 @@ var server = require('contentful-webhook-server')({
 });
  
 // Attach handlers to Contentful webhooks 
-server.on('ContentManagement.ContentType.publish', function(req){
+server.on('ContentManagement.Entry.publish', function(req){
 	console.log('A content type was published!');
 });
  
