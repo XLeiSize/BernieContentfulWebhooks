@@ -1,9 +1,5 @@
 // Create webhook server 
-var server = require('contentful-webhook-server')({
-	path: '/',
-	username: 'user',
-	password: 'pass'
-});
+var server = require('contentful-webhook-server')();
  
 // Attach handlers to Contentful webhooks 
 server.on('ContentManagement.Entry.publish', function(req){
