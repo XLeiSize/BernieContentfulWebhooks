@@ -1,31 +1,16 @@
-var listener = require("contentful-webhook-listener");
-var webhook = listener.createServer(function requestListener (request, response) {
+// Create webhook server
+var server = require('contentful-webhook-server')();
 
-	console.log("request received");
+// Handler for all successful requests
+// Is not emitted when an error occurs
+server.on('ContentManagement.*', function(topic, req){
 
-});
-var port = 5000;
-
-webhook.on("ContentManagement.Entry.publish", function (payload) {
-
-	console.log("publish that shit adele", payload);
-
+  // topic is available as string
+  // => e.g. ContentManagement.Asset.unpublish
+  console.log('Request came in for: ' + topic);
 });
 
-webhook.on("ContentManagement.Entry.save", function (payload) {
-
-	console.log("adele save this other side", payload);
-
-});
-
-webhook.on("ContentManagement.Entry.autoSave", function (payload) {
-
-	console.log("omg adele stop spam adele", payload);
-
-});
-
-webhook.listen(port, function callback () {
-
-	console.log("server is listening");
-
+// Start listening for requests on port 3000
+server.listen(5000, function(){
+  console.log('Contentful webhook server running on port ' + 5000)
 });
