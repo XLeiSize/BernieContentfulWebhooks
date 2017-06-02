@@ -6,21 +6,21 @@ var webhook = listener.createServer(function requestListener (request, response)
 });
 var port = 5000;
 
-webhook.on("publish", function (payload) {
+webhook.on("ContentManagement.Entry.publish", function (payload) {
 
-	console.log(payload);
-
-});
-
-webhook.on("save", function (payload) {
-
-	console.log(payload);
+	console.log("publish that shit adele", payload);
 
 });
 
-webhook.on("autoSave", function (payload) {
+webhook.on("ContentManagement.Entry.save", function (payload) {
 
-	console.log(payload);
+	console.log("adele save this other side", payload);
+
+});
+
+webhook.on("ContentManagement.Entry.autoSave", function (payload) {
+
+	console.log("omg adele stop spam adele", payload);
 
 });
 
