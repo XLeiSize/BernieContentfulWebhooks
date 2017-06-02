@@ -12,6 +12,18 @@ webhook.on("publish", function (payload) {
 
 });
 
+webhook.on("save", function (payload) {
+
+	console.log(payload);
+
+});
+
+webhook.on("autoSave", function (payload) {
+
+	console.log(payload);
+
+});
+
 webhook.listen(port, function callback () {
 
 	console.log("server is listening");
