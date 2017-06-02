@@ -1,12 +1,21 @@
-// Create webhook server 
-var server = require('contentful-webhook-server')();
- 
-// Attach handlers to Contentful webhooks 
-server.on('ContentManagement.Entry.publish', function(req){
-	console.log('A content type was published!');
+var listener = require("contentful-webhook-listener");
+var webhook = listener.createServer({
+	"auth": "username:password"
+}, function requestListener (request, response) {
+
+	console.log("request received");
+
 });
- 
-// Start listening for requests on port 3000 
-server.listen(3000, function(){
-	console.log('Contentful webhook server running on port ' + 3000)
+var port = 5000;
+
+webhook.on("publish", function (payload) {
+
+	console.log(payload);
+
+});
+
+webhook.listen(port, function callback () {
+
+	console.log("server is listening");
+
 });
