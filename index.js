@@ -1,7 +1,5 @@
 var listener = require("contentful-webhook-listener");
-var webhook = listener.createServer({
-	"auth": "username:password"
-}, function requestListener (request, response) {
+var webhook = listener.createServer(function requestListener (request, response) {
 
 	console.log("request received");
 
