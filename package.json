@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "contentful": "^4.3.0",
     "contentful-webhook-listener": "^1.0.2"
   }
 }
