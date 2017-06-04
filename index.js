@@ -11,6 +11,7 @@ server.on('ContentManagement.*', function(topic, req){
 });
 
 // Start listening for requests on port 3000
-server.listen(5000, function(){
-  console.log('Contentful webhook server running on port ' + 5000)
+const port = process.env.PORT || 8080;
+server.listen(port, function(){
+  console.log('Contentful webhook server running on port ' + port)
 });
