@@ -9,7 +9,7 @@ server.on('ContentManagement.Entry.publish', function(req){
 
 	// topic is available as string
 	// console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
-	console.log('Request: ', util.inspect(Object.keys(req), {showHidden: false, depth: null}))
+	console.log('Request: ', util.inspect(Object.keys(req.client), {showHidden: false, depth: null}))
 
 	if(req.contentType == 'artwork') {
 		const artwork = req.fields;
