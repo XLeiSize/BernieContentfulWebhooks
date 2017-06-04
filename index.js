@@ -10,6 +10,46 @@ server.on('ContentManagement.Entry.publish', function(req){
 	// topic is available as string
 	// console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
 	console.log('Request: ', util.inspect(Object.keys(req.client), {showHidden: false, depth: null}))
+	let body = "";
+
+	request.on("data", function (chunk) {
+
+		body += chunk.toString();
+
+	});
+
+	// parse body
+	request.on("end", function () {
+
+		response.writeHead(200, "OK");
+
+		try {
+
+		  body = JSON.parse(body);
+
+		  // emit event with webhook object
+		  let webhook = {
+			"contentType": body.sys.contentType && body.sys.contentType.sys.id,
+			"fields": body.fields,
+			"id": body.sys.id,
+			"kind": kind,
+			"origin": origin,
+			"space": body.sys.space.sys.id,
+			"sys": body.sys,
+			"webhookName": webhookName
+		  };
+		  server.emit(event, webhook);
+
+		} catch (err) {
+
+		  server.emit("error", err);
+		  server.close();
+
+		}
+
+		console.log(body);
+		response.end();
+	});
 
 	if(req.contentType == 'artwork') {
 		const artwork = req.fields;
