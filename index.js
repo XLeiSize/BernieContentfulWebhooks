@@ -5,7 +5,7 @@ const util = require('util')
 
 // Handler for all successful requests
 // Is not emitted when an error occurs
-server.on('ContentManagement.ContentType.publish', function(req){
+server.on('ContentManagement.Entry.publish', function(req){
 
 	// topic is available as string
 	// console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
