@@ -7,7 +7,7 @@ var webhook = listener.createServer({
 });
 const port = process.env.PORT || 8080;
 
-webhook.on("ContentManagement.Entry.publish", function (payload) {
+webhook.on("publish", function (payload) {
 
 	console.log(payload);
 
