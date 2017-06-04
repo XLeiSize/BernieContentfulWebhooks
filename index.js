@@ -1,4 +1,7 @@
 var listener = require("contentful-webhook-listener");
+
+const util = import('util');
+
 var webhook = listener.createServer({
 }, function requestListener (request, response) {
 
@@ -9,7 +12,7 @@ const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
 
-	console.log(payload);
+	console.log(util.inspect(payload, false, null));
 
 });
 
