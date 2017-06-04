@@ -22,7 +22,9 @@ webhook.on("publish", function (payload) {
 		obj.images['fr-FR'].forEach(e => {
 			const id = e.sys.id;
 
-			Contentful.getEntry(id)
+			console.log("Image id", id);
+
+			Contentful.getAsset(id)
 			.then( response => {
 				console.log(response);
 			})
