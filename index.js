@@ -7,19 +7,16 @@ const util = require('util')
 // Is not emitted when an error occurs
 server.on('ContentManagement.Entry.publish', function(req){
 
-	// topic is available as string
-	// console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
-	console.log('Request: ', util.inspect(Object.keys(req.client), {showHidden: false, depth: null}))
 	let body = "";
 
-	request.on("data", function (chunk) {
+	req.on("data", function (chunk) {
 
 		body += chunk.toString();
 
 	});
 
 	// parse body
-	request.on("end", function () {
+	req.on("end", function () {
 		try {
 		  body = JSON.parse(body);
 			console.log(body);
