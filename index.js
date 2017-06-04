@@ -8,7 +8,7 @@ server.on('ContentManagement.*', function(topic, req){
 	// topic is available as string
 	// => e.g. ContentManagement.Asset.unpublish
 	console.log('Request came in for: ' + topic);
-	console.log('Data retrieved: ' + req);
+	console.dir('Data retrieved: ' + req);
 });
 
 // Start listening for requests on port 3000
