@@ -1,5 +1,7 @@
 var listener = require("contentful-webhook-listener");
 
+const Contentful = require('./db.js');
+
 const util = require('util');
 
 var webhook = listener.createServer({
@@ -13,6 +15,22 @@ const port = process.env.PORT || 8080;
 webhook.on("publish", function (payload) {
 
 	console.log(util.inspect(payload, false, null));
+
+	const obj = payload.fields;
+
+	if(obj.images['fr-FR']) {
+		obj.images['fr-FR'].forEach(e => {
+			const id = e.sys.id;
+
+			Contentful.getEntry(id)
+			.then( response => {
+				console.log(response);
+			})
+			.catch( err => {
+				console.log(err);
+			});
+		});
+	}
 
 });
 
