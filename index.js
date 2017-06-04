@@ -1,6 +1,8 @@
 // Create webhook server
 var server = require('contentful-webhook-server')();
 
+const util = require('util')
+
 // Handler for all successful requests
 // Is not emitted when an error occurs
 server.on('ContentManagement.*', function(topic, req){
@@ -8,8 +10,7 @@ server.on('ContentManagement.*', function(topic, req){
 	// topic is available as string
 	// => e.g. ContentManagement.Asset.unpublish
 	console.log('Request came in for: ' + topic);
-	console.dir('Content type: ' + req.contentType);
-	console.dir('Object: ' + req.fields);
+	console.log('Request: ', util.inspect(myObject, {showHidden: false, depth: null}))
 
 	if(req.contentType == 'artwork') {
 		const artwork = req.fields;
