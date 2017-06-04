@@ -10,7 +10,8 @@ server.on('ContentManagement.*', function(topic, req){
 	// topic is available as string
 	// => e.g. ContentManagement.Asset.unpublish
 	console.log('Request came in for: ' + topic);
-	console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
+	// console.log('Request: ', util.inspect(req, {showHidden: false, depth: null}))
+	console.log('Request: ', util.inspect(req.body, {showHidden: false, depth: null}))
 
 	if(req.contentType == 'artwork') {
 		const artwork = req.fields;
