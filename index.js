@@ -1,6 +1,6 @@
 var listener = require("contentful-webhook-listener");
 
-const util = import('util');
+const util = require('util');
 
 var webhook = listener.createServer({
 }, function requestListener (request, response) {
