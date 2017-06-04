@@ -20,35 +20,11 @@ server.on('ContentManagement.Entry.publish', function(req){
 
 	// parse body
 	request.on("end", function () {
-
-		response.writeHead(200, "OK");
-
 		try {
-
 		  body = JSON.parse(body);
-
-		  // emit event with webhook object
-		  let webhook = {
-			"contentType": body.sys.contentType && body.sys.contentType.sys.id,
-			"fields": body.fields,
-			"id": body.sys.id,
-			"kind": kind,
-			"origin": origin,
-			"space": body.sys.space.sys.id,
-			"sys": body.sys,
-			"webhookName": webhookName
-		  };
-		  server.emit(event, webhook);
-
+			console.log(body);
 		} catch (err) {
-
-		  server.emit("error", err);
-		  server.close();
-
 		}
-
-		console.log(body);
-		response.end();
 	});
 
 	if(req.contentType == 'artwork') {
