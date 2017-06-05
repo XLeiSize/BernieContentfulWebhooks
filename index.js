@@ -8,6 +8,8 @@ const Axios = require('axios');
 
 const util = require('util');
 
+const Vuforia  = require('./vuforia.js')
+
 var webhook = listener.createServer({
 }, function requestListener (request, response) {
 
@@ -31,8 +33,11 @@ webhook.on("publish", function (payload) {
 				.then( response => {
 					const uniqId = obj.slug['fr-FR'] + '_' + id;
 					console.log(uniqId);
+					console.log( "response &&&&&&", response );
+					// PUT VUFORIA CALL HERE 👌
 
-					// PUT VUFORIA CALL HERE
+					//Vuforia.addTarget( uniqId,  )
+
 
 				})
 				.catch( err => {
