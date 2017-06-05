@@ -1,7 +1,5 @@
 // load module
 const vufo = require('vuforiajs');
-const request = require('request');
-
 
 
 let options = {
