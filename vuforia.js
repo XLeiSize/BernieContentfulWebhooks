@@ -22,7 +22,7 @@ class Vuforia {
   }
 
   addTarget( name, uri ) {
-
+    const scope = this
     this.download( uri, tempImg, function() {
       console.log("uri", uri, "tempimg", tempImg);
       var target = {
@@ -32,15 +32,15 @@ class Vuforia {
         // width of the target in scene unit
         'width': 32.0,
         // the base64 encoded binary recognition image data
-        'image': this.util.encodeFileBase64( tempImg ),
+        'image': scope.util.encodeFileBase64( tempImg ),
         // indicates whether or not the target is active for query
         'active_flag': true,
         // the base64 encoded application metadata associated with the target
-        'application_metadata': this.util.encodeBase64( tempImg )
+        'application_metadata': scope.util.encodeBase64( tempImg )
       };
 
       return new Promise((resolve, reject) => {
-        this.client.addTarget(target, function (error, result) {
+        scope.client.addTarget(target, function (error, result) {
           if (error) {
                reject(error);
           } else {
@@ -49,7 +49,7 @@ class Vuforia {
           }
         } );
       } );
-    } ).bind(this)
+    } )
 
 
   }
