@@ -11,6 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "contentful": "^4.3.0",
-    "contentful-webhook-listener": "^1.0.2"
+    "contentful-webhook-listener": "^1.0.2",
+    "axios": "^0.16.2"
   }
 }

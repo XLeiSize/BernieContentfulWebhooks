@@ -2,6 +2,10 @@ var listener = require("contentful-webhook-listener");
 
 const Contentful = require('./db.js');
 
+const Apiai = require('./apiai.js');
+
+const Axios = require('axios');
+
 const util = require('util');
 
 var webhook = listener.createServer({
@@ -26,13 +30,34 @@ webhook.on("publish", function (payload) {
 
 			Contentful.getAsset(id)
 			.then( response => {
-				console.log(response);
+				const uniqId = obj.slug + '_' + id;
+				console.log(uniqId);
+				// PUT VUFORIA CALL HERE
 			})
 			.catch( err => {
 				console.log(err);
 			});
 		});
 	}
+
+	const ApiaiConfig = {
+
+		url: Apiai.url + 'entities/' + Apiai.artworkEntityId + '/entries' + Apiai.version,
+
+		method: 'post',
+
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + Apiai.devToken
+		},
+
+		data: '[{"value": "' + obj.title + '"}]'
+	};
+
+	Axios(ApiaiConfig)
+	.then(resp => {
+		console.log(response);
+	});
 
 });
 
