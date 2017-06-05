@@ -1,6 +1,7 @@
 // load module
 const vufo = require('vuforiajs');
 const request = require('request');
+const fs = require('fs');
 
 let tempImg = 'temporary.jpg'
 

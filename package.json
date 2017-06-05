@@ -13,6 +13,7 @@
     "axios": "^0.16.2",
     "contentful": "^4.3.0",
     "contentful-webhook-listener": "^1.0.2",
+    "fs": "0.0.1-security",
     "request": "^2.81.0",
     "vuforiajs": "^0.2.5"
   }
