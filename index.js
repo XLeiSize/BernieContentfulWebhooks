@@ -36,7 +36,7 @@ webhook.on("publish", function (payload) {
 					console.log( "response &&&&&&", response );
 					// PUT VUFORIA CALL HERE 👌
 
-					//Vuforia.addTarget( uniqId,  )
+					Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
 
 
 				})
