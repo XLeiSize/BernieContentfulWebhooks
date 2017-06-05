@@ -30,7 +30,7 @@ webhook.on("publish", function (payload) {
 
 				Contentful.getAsset(id)
 				.then( response => {
-					const uniqId = obj.slug + '_' + id;
+					const uniqId = obj.slug['fr-FR'] + '_' + id;
 					console.log(uniqId);
 					// PUT VUFORIA CALL HERE
 				})
@@ -57,6 +57,9 @@ webhook.on("publish", function (payload) {
 		Axios(ApiaiConfig)
 		.then(resp => {
 			console.log(response);
+		})
+		.catch( err => {
+			console.log(err);
 		});
 	}
 });
