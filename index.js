@@ -51,11 +51,11 @@ webhook.on("publish", function (payload) {
 				'Authorization': 'Bearer ' + Apiai.devToken
 			},
 
-			data: '[{"value": "' + obj.title + '"}]'
+			data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
 		};
 
 		Axios(ApiaiConfig)
-		.then(resp => {
+		.then(response => {
 			console.log(response);
 		})
 		.catch( err => {
