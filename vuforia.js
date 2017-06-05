@@ -24,7 +24,7 @@ class Vuforia {
   addTarget( name, uri ) {
 
     this.download( uri, tempImg, function() {
-      console.log("uri", uri, "tempimg", tempimg);
+      console.log("uri", uri, "tempimg", tempImg);
       var target = {
 
         // name of the target, unique within a database
