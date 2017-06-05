@@ -3,7 +3,7 @@ const vufo = require('vuforiajs');
 const request = require('request');
 const fs = require('fs');
 
-let tempImg = 'temporary.jpg'
+let file = 'temporary.jpg'
 
 let options = {
     // provision_access_key
@@ -23,20 +23,20 @@ class Vuforia {
 
   addTarget( name, uri ) {
     const scope = this
-    this.download( uri, tempImg, function() {
-      console.log("uri", uri, "tempimg", tempImg);
+    this.download( uri, file, function() {
+      console.log("uri", uri, "tempimg", file);
       var target = {
 
         // name of the target, unique within a database
-        'name':tempImg,
+        'name':name,
         // width of the target in scene unit
         'width': 32.0,
         // the base64 encoded binary recognition image data
-        'image': scope.util.encodeFileBase64( tempImg ),
+        'image': scope.util.encodeFileBase64( file ),
         // indicates whether or not the target is active for query
         'active_flag': true,
         // the base64 encoded application metadata associated with the target
-        'application_metadata': scope.util.encodeBase64( tempImg )
+        'application_metadata': scope.util.encodeBase64( name )
       };
 
       return new Promise((resolve, reject) => {
