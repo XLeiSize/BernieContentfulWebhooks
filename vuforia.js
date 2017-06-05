@@ -1,6 +1,8 @@
 // load module
 const vufo = require('vuforiajs');
+const request = require('request');
 
+let tempImg = 'temporary.jpg'
 
 let options = {
     // provision_access_key
@@ -18,30 +20,37 @@ class Vuforia {
     this.util = vufo.util();
   }
 
-  addTarget( name, image ) {
-    var target = {
+  addTarget( name, uri ) {
 
-    // name of the target, unique within a database
-    'name':name,
-    // width of the target in scene unit
-    'width': 32.0,
-    // the base64 encoded binary recognition image data
-    'image': this.util.encodeFileBase64( image ),
-    // indicates whether or not the target is active for query
-    'active_flag': true,
-    // the base64 encoded application metadata associated with the target
-    'application_metadata': this.util.encodeBase64( name )
-};
-    return new Promise((resolve, reject) => {
-      this.client.addTarget(target, function (error, result) {
-        if (error) {
-             reject(error);
-        } else {
-            console.log(result);
-            resolve(result);
-        }
-      });
-    });
+    this.download( uri, tempImg, function() {
+      console.log("uri", uri, "tempimg", tempimg);
+      var target = {
+
+        // name of the target, unique within a database
+        'name':tempImg,
+        // width of the target in scene unit
+        'width': 32.0,
+        // the base64 encoded binary recognition image data
+        'image': this.util.encodeFileBase64( tempImg ),
+        // indicates whether or not the target is active for query
+        'active_flag': true,
+        // the base64 encoded application metadata associated with the target
+        'application_metadata': this.util.encodeBase64( tempImg )
+      };
+
+      return new Promise((resolve, reject) => {
+        this.client.addTarget(target, function (error, result) {
+          if (error) {
+               reject(error);
+          } else {
+              console.log(result);
+              resolve(result);
+          }
+        } );
+      } );
+    } )
+
+
   }
 
   listTargets() {
@@ -69,7 +78,7 @@ class Vuforia {
     });
   }
 
-  updateTarget( id, update ){
+  updateTarget( id, update ) {
     return new Promise((resolve, reject) => {
       this.client.updateTarget( id, update, function (error, result) {
         if (error) {
@@ -92,6 +101,12 @@ class Vuforia {
             resolve(result);
         }
       });
+    });
+  }
+
+  download( uri, filename, callback ) {
+    request.head( uri, function( err, res, body ) {
+      request( uri ).pipe( fs.createWriteStream( filename ) ).on( 'close', callback );
     });
   }
 }
