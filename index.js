@@ -18,7 +18,6 @@ const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
 
-	console.log(util.inspect(payload, false, null));
 	if(payload.contentType == 'artwork') {
 		const obj = payload.fields;
 
@@ -32,7 +31,9 @@ webhook.on("publish", function (payload) {
 				.then( response => {
 					const uniqId = obj.slug['fr-FR'] + '_' + id;
 					console.log(uniqId);
+
 					// PUT VUFORIA CALL HERE
+
 				})
 				.catch( err => {
 					console.log(err);
@@ -56,7 +57,7 @@ webhook.on("publish", function (payload) {
 
 		Axios(ApiaiConfig)
 		.then(response => {
-			console.log(response);
+			console.log(response.data.status.errorType);
 		})
 		.catch( err => {
 			console.log(err);
