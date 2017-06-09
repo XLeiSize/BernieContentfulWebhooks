@@ -62,6 +62,7 @@ webhook.on("publish", function (payload) {
 
 		Axios(ApiaiConfig)
 		.then(response => {
+			console.log("@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#");
 			console.log(response.data.status.errorType);
 		})
 		.catch( err => {
