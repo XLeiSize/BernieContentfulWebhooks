@@ -64,6 +64,7 @@ webhook.on("publish", function (payload) {
 		.then(response => {
 			console.log("@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#");
 			console.log(response.data.status.errorType);
+			console.log(response.data);
 		})
 		.catch( err => {
 			console.log(err);
