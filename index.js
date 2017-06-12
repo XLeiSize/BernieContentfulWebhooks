@@ -21,6 +21,7 @@ const port = process.env.PORT || 8080;
 webhook.on("publish", function (payload) {
 	let id, obj, ApiaiConfig;
 	obj = payload.fields;
+	console.log(payload);
 
 	switch( payload.contentType ){
 		case 'artist':
