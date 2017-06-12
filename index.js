@@ -20,13 +20,14 @@ const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
 	let id;
+	let obj;
 	switch( payload.contentType ){
 		case 'artist':
 			id = Apiai.artistEntityId
 		case 'artwork': // GO SEND IMAGE TO VUFORIA
 			id = Apiai.artworkEntityId
 
-			const obj = payload.fields;
+			obj = payload.fields;
 
 			if(obj.images['fr-FR']) {
 				obj.images['fr-FR'].forEach(e => {
