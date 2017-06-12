@@ -19,11 +19,21 @@ var webhook = listener.createServer({
 const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
-	let id;
-	let obj;
+	let id, obj, ApiaiConfig;
+
 	switch( payload.contentType ){
 		case 'artist':
 			id = Apiai.artistEntityId
+			ApiaiConfig = {
+				url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Apiai.devToken
+				},
+				data: '[{"value": "' + obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR'] + '"}]'
+			};
+
 		case 'artwork': // GO SEND IMAGE TO VUFORIA
 			id = Apiai.artworkEntityId
 
@@ -40,34 +50,34 @@ webhook.on("publish", function (payload) {
 						const uniqId = obj.slug['fr-FR'] + '_' + id;
 						console.log(uniqId);
 						console.log( "response &&&&&&", response );
-						// PUT VUFORIA CALL HERE 👌
-
 						Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
-
-
 					})
 					.catch( err => {
 						console.log(err);
 					});
 				});
 			}
+			ApiaiConfig = {
+				url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Apiai.devToken
+				},
+				data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
+			};
 		case 'movement':
 			id = Apiai.movementEntityId
+			ApiaiConfig = {
+				url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
+				method: 'post',
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + Apiai.devToken
+				},
+				data: '[{"value": "' + obj.name['fr-FR'] + '"}]'
+			};
 	}
-
-	const ApiaiConfig = {
-
-		url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
-
-		method: 'post',
-
-		headers: {
-			'Content-Type': 'application/json',
-			'Authorization': 'Bearer ' + Apiai.devToken
-		},
-
-		data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
-	};
 
 	Axios(ApiaiConfig)
 	.then(response => {
