@@ -35,7 +35,7 @@ webhook.on("publish", function (payload) {
 				},
 				data: '[{"value": "' + obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR'] + '"}]'
 			};
-
+			break;
 		case 'artwork': // GO SEND IMAGE TO VUFORIA
 			id = Apiai.artworkEntityId
 
@@ -66,6 +66,7 @@ webhook.on("publish", function (payload) {
 				},
 				data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
 			};
+			break;
 		case 'movement':
 			id = Apiai.movementEntityId
 			ApiaiConfig = {
@@ -77,6 +78,7 @@ webhook.on("publish", function (payload) {
 				},
 				data: '[{"value": "' + obj.name['fr-FR'] + '"}]'
 			};
+			break;
 	}
 
 	Axios(ApiaiConfig)
