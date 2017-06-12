@@ -19,57 +19,65 @@ var webhook = listener.createServer({
 const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
+	let id;
+	switch( payload.contentType ){
+		case 'artist':
+			id = Apiai.artistEntityId
+		case 'artwork': // GO SEND IMAGE TO VUFORIA
+			id = Apiai.artworkEntityId
 
-	if(payload.contentType == 'artwork') {
-		const obj = payload.fields;
+			const obj = payload.fields;
 
-		if(obj.images['fr-FR']) {
-			obj.images['fr-FR'].forEach(e => {
-				const id = e.sys.id;
+			if(obj.images['fr-FR']) {
+				obj.images['fr-FR'].forEach(e => {
+					const id = e.sys.id;
 
-				console.log("Image id", id);
+					console.log("Image id", id);
 
-				Contentful.getAsset(id)
-				.then( response => {
-					const uniqId = obj.slug['fr-FR'] + '_' + id;
-					console.log(uniqId);
-					console.log( "response &&&&&&", response );
-					// PUT VUFORIA CALL HERE 👌
+					Contentful.getAsset(id)
+					.then( response => {
+						const uniqId = obj.slug['fr-FR'] + '_' + id;
+						console.log(uniqId);
+						console.log( "response &&&&&&", response );
+						// PUT VUFORIA CALL HERE 👌
 
-					Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
+						Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
 
 
-				})
-				.catch( err => {
-					console.log(err);
+					})
+					.catch( err => {
+						console.log(err);
+					});
 				});
-			});
-		}
-
-		const ApiaiConfig = {
-
-			url: Apiai.url + 'entities/' + Apiai.artworkEntityId + '/entries' + Apiai.version,
-
-			method: 'post',
-
-			headers: {
-				'Content-Type': 'application/json',
-				'Authorization': 'Bearer ' + Apiai.devToken
-			},
-
-			data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
-		};
-
-		Axios(ApiaiConfig)
-		.then(response => {
-			console.log("@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#");
-			console.log(response.data.status.errorType);
-			console.log(response.data);
-		})
-		.catch( err => {
-			console.log(err);
-		});
+			}
+		case 'movement':
+			id = Apiai.movementEntityId
 	}
+
+	const ApiaiConfig = {
+
+		url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
+
+		method: 'post',
+
+		headers: {
+			'Content-Type': 'application/json',
+			'Authorization': 'Bearer ' + Apiai.devToken
+		},
+
+		data: '[{"value": "' + obj.title['fr-FR'] + '"}]'
+	};
+
+	Axios(ApiaiConfig)
+	.then(response => {
+		console.log("@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#@#@#@#@#@#@#@#@@@#@#@#@#@#@#@#@#@#@#@#@#@#@@#@#");
+		console.log(response.data.status.errorType);
+		console.log(response.data);
+	})
+	.catch( err => {
+		console.log(err);
+	});
+
 });
 
 webhook.listen(port, function(){
