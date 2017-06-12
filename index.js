@@ -20,6 +20,7 @@ const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
 	let id, obj, ApiaiConfig;
+	obj = payload.fields;
 
 	switch( payload.contentType ){
 		case 'artist':
@@ -36,8 +37,6 @@ webhook.on("publish", function (payload) {
 
 		case 'artwork': // GO SEND IMAGE TO VUFORIA
 			id = Apiai.artworkEntityId
-
-			obj = payload.fields;
 
 			if(obj.images['fr-FR']) {
 				obj.images['fr-FR'].forEach(e => {
