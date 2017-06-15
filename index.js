@@ -26,6 +26,7 @@ webhook.on("publish", function (payload) {
 	switch( payload.contentType ){
 		case 'artist':
 			id = Apiai.artistEntityId
+			let name = obj.firstName['fr-FR'] ? obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR']  : obj.lastName['fr-FR'] 
 			ApiaiConfig = {
 				url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
 				method: 'post',
@@ -33,7 +34,7 @@ webhook.on("publish", function (payload) {
 					'Content-Type': 'application/json',
 					'Authorization': 'Bearer ' + Apiai.devToken
 				},
-				data: '[{"value": "' + obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR'] + '"}]'
+				data: '[{"value": "' + name + '"}]'
 			};
 			break;
 		case 'artwork': // GO SEND IMAGE TO VUFORIA
