@@ -48,9 +48,16 @@ webhook.on("publish", function (payload) {
 
 					Contentful.getAsset(id)
 					.then( response => {
-						const uniqId = obj.slug['fr-FR'] + '_' + id;
+						let uniqId = obj.slug['fr-FR'] + '_' + id;
+						//CHAR LIMIT ON VUFORIA
+						if( uniqId.length > 64 ){
+							const splitAt = index => it =>
+  							[it.slice(0, index), it.slice(index)]
+
+							const truncatedId = splitAt(64)(uniqId)
+							uniqId = truncatedId[0]
+						}
 						console.log(uniqId);
-						console.log( "response &&&&&&", response );
 						Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
 					})
 					.catch( err => {
