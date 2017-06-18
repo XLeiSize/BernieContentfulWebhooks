@@ -19,6 +19,7 @@ var webhook = listener.createServer({
 const port = process.env.PORT || 8080;
 
 webhook.on("publish", function (payload) {
+<<<<<<< HEAD
 	let id, obj, ApiaiConfig;
 	obj = payload.fields;
 	console.log(payload);
@@ -26,7 +27,7 @@ webhook.on("publish", function (payload) {
 	switch( payload.contentType ){
 		case 'artist':
 			id = Apiai.artistEntityId
-			let name = obj.firstName['fr-FR'] ? obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR']  : obj.lastName['fr-FR'] 
+			let name = obj.firstName['fr-FR'] ? obj.firstName['fr-FR'] + " " + obj.lastName['fr-FR']  : obj.lastName['fr-FR']
 			ApiaiConfig = {
 				url: Apiai.url + 'entities/' + id + '/entries' + Apiai.version,
 				method: 'post',
@@ -54,6 +55,7 @@ webhook.on("publish", function (payload) {
 						Vuforia.addTarget( uniqId, 'https:' + response.fields.file.url )
 					})
 					.catch( err => {
+						console.log("ERROR CONTENTFUL GETTING ASSET", err);
 						console.log(err);
 					});
 				});
@@ -89,6 +91,7 @@ webhook.on("publish", function (payload) {
 		console.log(response.data);
 	})
 	.catch( err => {
+		console.log("ERROR ADDING TO API.AI ENTITY", err);
 		console.log(err);
 	});
 

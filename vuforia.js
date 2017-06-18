@@ -42,6 +42,7 @@ class Vuforia {
       return new Promise((resolve, reject) => {
         scope.client.addTarget(target, function (error, result) {
           if (error) {
+            console.log("VUFORIA ADD TARGET ERROR", error);
                reject(error);
           } else {
               console.log(result);
